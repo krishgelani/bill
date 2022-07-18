@@ -2,7 +2,6 @@ import 'package:bill/screen/home/model/modelclass.dart';
 import 'package:bill/utils/constant/components/size.dart';
 import 'package:flutter/material.dart';
 
-import '../../../main.dart';
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
@@ -19,9 +18,7 @@ class _homeState extends State<home> {
   TextEditingController txtquant = TextEditingController();
 
   String? name,number;
-  // List iname = [""];
-  List price = [""];
-  List quant = [""];
+   List<Model> iname=[];
 
   @override
   Widget build(BuildContext context) {
@@ -240,11 +237,14 @@ class _homeState extends State<home> {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              setState(() {
-                                iname.add(txtiname.text);
-                                price.add(txtprice.text);
-                                quant.add(txtquant.text);
-                              });
+
+                              Model m1 = Model(
+                                iname: txtiname.text,
+                                quantity:txtquant.text,
+                                price: txtprice.text
+                              );
+
+                              iname.add(m1);
                               txtiname.clear();
                               txtprice.clear();
                               txtquant.clear();
@@ -275,14 +275,8 @@ class _homeState extends State<home> {
                       name = txtcname.text;
                       number = txtcnum.text;
                     });
-                      Model m1 = Model(
-                        cname: name,
-                        cnumber: number,
-                        iname: iname,
-                        price: price,
-                        quantity: quant
-                      );
-                    Navigator.pushNamed(context, '/bill',arguments: m1);
+
+                    Navigator.pushNamed(context, '/bill',arguments: iname);
                   },
                   child: Text("Done"),
                   style: ElevatedButton.styleFrom(primary: Colors.indigo),
