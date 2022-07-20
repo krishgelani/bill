@@ -1,6 +1,9 @@
 import 'package:bill/screen/home/model/modelclass.dart';
 import 'package:bill/utils/constant/components/size.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
+
+import '../../../main.dart';
 
 
 class home extends StatefulWidget {
@@ -19,6 +22,8 @@ class _homeState extends State<home> {
 
   String? name,number;
    List<Model> iname=[];
+   List<double> s =[];
+
 
   @override
   Widget build(BuildContext context) {
@@ -237,17 +242,20 @@ class _homeState extends State<home> {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-
                               Model m1 = Model(
-                                iname: txtiname.text,
-                                quantity:txtquant.text,
-                                price: txtprice.text
+                                  iname: txtiname.text,
+                                  quantity: txtquant.text,
+                                  price: txtprice.text,
                               );
 
                               iname.add(m1);
+                              total = double.parse(txtprice.text) * double.parse(txtquant.text);
+                              s.add(total);
                               txtiname.clear();
                               txtprice.clear();
                               txtquant.clear();
+                              sum = s.sum;
+                              print("===============================$sum");
                             },
                             child: Text(
                               "Add Item",
@@ -263,53 +271,26 @@ class _homeState extends State<home> {
                 ),
 
                 H(30),
-                
+
                 Align(
-                  alignment: Alignment.centerRight,
+                    alignment: Alignment.centerRight,
                     child: Container(
                       height: 50,
                       width: 100,
                       child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      name = txtcname.text;
-                      number = txtcnum.text;
-                    });
+                        onPressed: () {
+                          setState(() {
+                            name = txtcname.text;
+                            number = txtcnum.text;
+                          });
 
-                    Navigator.pushNamed(context, '/bill',arguments: iname);
-                  },
-                  child: Text("Done"),
-                  style: ElevatedButton.styleFrom(primary: Colors.indigo),
-                ),
+                          Navigator.pushNamed(
+                              context, '/bill', arguments: iname);
+                        },
+                        child: Text("Done"),
+                        style: ElevatedButton.styleFrom(primary: Colors.indigo),
+                      ),
                     )),
-
-
-                H(50),
-
-
-                Container(
-                  height: 400,
-                  width: double.infinity,
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text("Bussiness Name",style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text("177 Bleekr Street,\n     Manhatten, \n      New York\n+917862952601",style: TextStyle(fontSize: 20),),
-                        ),
-                        H(20),
-                        Text("----------------------------------------",style: TextStyle(fontSize: 28),),
-
-                      ],
-                    ),
-                  ),
-                )
               ],
             ),
           ),
